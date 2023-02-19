@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 262835925}
   - component: {fileID: 262835924}
   - component: {fileID: 262835926}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Indescructibles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2548,8 +2548,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1062549622}
   - component: {fileID: 1062549621}
-  m_Layer: 0
-  m_Name: Grid
+  m_Layer: 3
+  m_Name: Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2808,13 +2808,13 @@ GameObject:
   - component: {fileID: 1698185282}
   - component: {fileID: 1698185281}
   - component: {fileID: 1698185283}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desructibles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1698185280
 Transform:
   m_ObjectHideFlags: 0
@@ -3870,3 +3870,9 @@ MonoBehaviour:
   LayBomb: 32
   bombFuseTime: 3
   bombAmount: 1
+  ExplosionPrefab: {fileID: 38809843078269150, guid: 597c560bc5ebdb54883d44fe5e663532, type: 3}
+  explosionDuration: 1
+  explosionRadius: 4
+  ExplosionLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
