@@ -10,7 +10,7 @@ public class BombController : MonoBehaviour
 
     [Header("Bomb")]
     public float bombFuseTime = 3.0f;
-    public int bombAmount = 1;
+    public int bombsAmount = 1;
     private int bombsRemaining;
 
     [Header("Explosion")]
@@ -25,7 +25,7 @@ public class BombController : MonoBehaviour
 
     private void OnEnable()
     {
-        bombsRemaining = bombAmount;
+        bombsRemaining = bombsAmount;
     }
 
     private void Update()
@@ -100,7 +100,6 @@ public class BombController : MonoBehaviour
             return;
         }
 
-        Debug.Log(length);
 
         Explosion Explosion = Instantiate(ExplosionPrefab, position, Quaternion.identity);
         Explosion.SetActiveRenderer(length > 1 ? Explosion.Middle : Explosion.End);
@@ -120,6 +119,12 @@ public class BombController : MonoBehaviour
             Instantiate(DestructiblePrefab, position, Quaternion.identity);
             DestructibleTiles.SetTile(Cell, null);
         }
+    }
+
+    public void AddBomb()
+    {
+        bombsAmount++;
+        bombsRemaining++;
     }
 }
  
