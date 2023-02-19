@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
 public class BombController : MonoBehaviour
@@ -17,6 +18,10 @@ public class BombController : MonoBehaviour
     public float explosionDuration = 1.0f;
     public int explosionRadius = 1;
     public LayerMask ExplosionLayerMask;
+
+    [Header("Desructible")]
+    public Tilemap DestructibleTiles;
+    public Destructible DestructiblePrefab;
 
     private void OnEnable()
     {
@@ -87,7 +92,13 @@ public class BombController : MonoBehaviour
         // Angle is not important;  Need Layer Mask because we want explosion to stop only
         // with stage elements (i.e. blocks)
         // Return (don't continue the explosion in that direction) because it is hindered
-        if (Physics2D.OverlapBox(position, Vector2.one / 2.0f, 0.0f, ExplosionLayerMask)) return;
+        if (Physics2D.OverlapBox(position, Vector2.one / 2.0f, 0.0f, ExplosionLayerMask))
+        {
+
+            ClearDesructible(position);
+
+            return;
+        }
 
         Debug.Log(length);
 
@@ -97,6 +108,18 @@ public class BombController : MonoBehaviour
         Explosion.DestroyAfter(explosionDuration);
 
         Explode(position, direction, length - 1);
+    }
+
+    private void ClearDesructible(Vector2 position)
+    {
+        Vector3Int Cell = DestructibleTiles.WorldToCell(position);
+        TileBase Tile = DestructibleTiles.GetTile(Cell);
+
+        if (Tile != null)
+        {
+            Instantiate(DestructiblePrefab, position, Quaternion.identity);
+            DestructibleTiles.SetTile(Cell, null);
+        }
     }
 }
  

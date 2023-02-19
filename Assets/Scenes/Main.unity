@@ -3876,3 +3876,5 @@ MonoBehaviour:
   ExplosionLayerMask:
     serializedVersion: 2
     m_Bits: 8
+  DestructibleTiles: {fileID: 1698185282}
+  DestructiblePrefab: {fileID: 3247132042540667098, guid: 827e6b983834dd744abfbfde8eb212cd, type: 3}
