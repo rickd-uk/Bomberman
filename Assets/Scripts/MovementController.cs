@@ -16,6 +16,7 @@ public class MovementController : MonoBehaviour
     public AnimatedSpriteRenderer SpriteRendererDown;
     public AnimatedSpriteRenderer SpriteRendererLeft;
     public AnimatedSpriteRenderer SpriteRendererRight;
+    public AnimatedSpriteRenderer SpriteRendererDeath;
     private AnimatedSpriteRenderer ActiveSpriteRenderer;
 
 
@@ -73,5 +74,33 @@ public class MovementController : MonoBehaviour
 
         ActiveSpriteRenderer = SpriteRenderer;
         ActiveSpriteRenderer.idle = direction == Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D Other)
+    {
+        if (Other.gameObject.layer == LayerMask.NameToLayer("Explosion"))
+        {
+            DeathSequence();
+        }
+    }
+
+    private void DeathSequence()
+    {
+        // disable movement controller
+        enabled = false;
+        GetComponent<BombController>().enabled = false;
+
+        SpriteRendererUp.enabled = false;
+        SpriteRendererDown.enabled = false;
+        SpriteRendererLeft.enabled = false;
+        SpriteRendererRight.enabled = false;
+        SpriteRendererDeath.enabled = true;
+
+        Invoke(nameof(OnDeathSequenceEnded), 1.25f);
+    }
+
+    private void OnDeathSequenceEnded()
+    {
+        gameObject.SetActive(false);
     }
 }
