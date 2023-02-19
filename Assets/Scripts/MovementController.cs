@@ -12,33 +12,40 @@ public class MovementController : MonoBehaviour
     public KeyCode inputLeft = KeyCode.A;
     public KeyCode inputRight = KeyCode.D;
 
+    public AnimatedSpriteRenderer SpriteRendererUp;
+    public AnimatedSpriteRenderer SpriteRendererDown;
+    public AnimatedSpriteRenderer SpriteRendererLeft;
+    public AnimatedSpriteRenderer SpriteRendererRight;
+    private AnimatedSpriteRenderer ActiveSpriteRenderer;
+
 
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
+        ActiveSpriteRenderer = SpriteRendererDown;
     }
 
     private void HandleInput()
     {
         if (Input.GetKey(inputUp))
         {
-            SetDirection(Vector2.up);
+            SetDirection(Vector2.up, SpriteRendererUp);
         }
         else if (Input.GetKey(inputDown))
         {
-            SetDirection(Vector2.down);
+            SetDirection(Vector2.down, SpriteRendererDown);
         }
         else if (Input.GetKey(inputLeft))
         {
-            SetDirection(Vector2.left);
+            SetDirection(Vector2.left, SpriteRendererLeft);
         }
         else if (Input.GetKey(inputRight))
         {
-            SetDirection(Vector2.right);
+            SetDirection(Vector2.right, SpriteRendererRight);
         }
         else
         {
-            SetDirection(Vector2.zero);
+            SetDirection(Vector2.zero, ActiveSpriteRenderer);
         }
     }
 
@@ -55,8 +62,16 @@ public class MovementController : MonoBehaviour
         Rigidbody.MovePosition(position + translation);
     }
 
-    private void SetDirection(Vector2 newDir)
+    private void SetDirection(Vector2 newDir, AnimatedSpriteRenderer SpriteRenderer)
     {
         direction = newDir;
+
+        SpriteRendererUp.enabled = SpriteRenderer == SpriteRendererUp;
+        SpriteRendererDown.enabled = SpriteRenderer == SpriteRendererDown;
+        SpriteRendererLeft.enabled = SpriteRenderer == SpriteRendererLeft;
+        SpriteRendererRight.enabled = SpriteRenderer == SpriteRendererRight;
+
+        ActiveSpriteRenderer = SpriteRenderer;
+        ActiveSpriteRenderer.idle = direction == Vector2.zero;
     }
 }
